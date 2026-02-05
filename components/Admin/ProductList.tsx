@@ -50,7 +50,8 @@ const AdminProductList = ({ onEdit }: { onEdit: (product: Product) => void }) =>
 
     return (
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            <div className="overflow-x-auto">
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-left">
                     <thead className="bg-gray-50 border-b border-gray-100">
                         <tr>
@@ -110,6 +111,53 @@ const AdminProductList = ({ onEdit }: { onEdit: (product: Product) => void }) =>
                         )}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden divide-y divide-gray-100">
+                {products.map((product) => (
+                    <div key={product._id} className="p-4 space-y-3">
+                        <div className="flex items-start justify-between gap-4">
+                            <div className="flex items-center gap-3">
+                                <img src={product.imageUrl} alt={product.name} className="w-12 h-12 rounded-lg object-cover bg-gray-100" />
+                                <div>
+                                    <p className="font-bold text-gray-900">{product.name}</p>
+                                    <p className="text-xs text-gray-500">{product.unit}</p>
+                                </div>
+                            </div>
+                            <span className="font-bold text-gray-900">₹{product.price}</span>
+                        </div>
+
+                        <div className="flex items-center justify-between text-sm">
+                            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-600">
+                                <Tag size={10} />
+                                {product.category}
+                            </span>
+                            <span className={`text-xs font-medium ${product.stock <= 5 ? "text-red-600" : "text-gray-600"}`}>
+                                Stock: {product.stock} {product.unit}
+                            </span>
+                        </div>
+
+                        <div className="flex gap-2 pt-2">
+                            <button
+                                onClick={() => onEdit(product)}
+                                className="flex-1 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-bold hover:bg-blue-100 transition flex items-center justify-center gap-2"
+                            >
+                                <Edit size={16} /> Edit
+                            </button>
+                            <button
+                                onClick={() => deleteProduct(product._id)}
+                                className="flex-1 py-2 bg-red-50 text-red-600 rounded-lg text-sm font-bold hover:bg-red-100 transition flex items-center justify-center gap-2"
+                            >
+                                <Trash2 size={16} /> Delete
+                            </button>
+                        </div>
+                    </div>
+                ))}
+
+                {products.length === 0 && (
+                    <div className="p-8 text-center text-gray-400 italic">No products found.</div>
+                )}
             </div>
         </div>
     );
