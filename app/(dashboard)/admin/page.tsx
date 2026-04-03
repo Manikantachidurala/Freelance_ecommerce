@@ -10,7 +10,7 @@ import CategoryManager from "@/components/Admin/CategoryManager";
 import AdminProductList from "@/components/Admin/ProductList";
 import AdminManager from "@/components/Admin/AdminManager";
 import CouponManager from "@/components/Admin/CouponManager";
-import { Plus, Package, ClipboardList, BarChart3, Tag, Users, Ticket } from "lucide-react";
+import { Plus, Package, ClipboardList, BarChart3, Tag, Users, Ticket, Search as SearchIcon, X } from "lucide-react";
 import connectDB from "@/lib/db";
 import Admin from "@/lib/models/Admin";
 
@@ -20,6 +20,7 @@ export default function AdminPage() {
     const [showProductForm, setShowProductForm] = useState(false);
     const [editingProduct, setEditingProduct] = useState<any>(null);
     const [refreshKey, setRefreshKey] = useState(0);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const [isAdmin, setIsAdmin] = useState(false);
     const [isSuperAdmin, setIsSuperAdmin] = useState(false);
@@ -114,7 +115,8 @@ export default function AdminPage() {
                 {activeTab === "products" && (
                     <AdminProductList
                         key={refreshKey}
-                        onEdit={(p) => {
+                        externalSearchQuery={searchQuery}
+                        onEdit={(p: any) => {
                             setEditingProduct(p);
                             setShowProductForm(true);
                         }} />
@@ -138,3 +140,4 @@ export default function AdminPage() {
         </div>
     );
 }
+
