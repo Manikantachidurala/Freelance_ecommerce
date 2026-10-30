@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Plus, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { useState, useMemo } from "react";
@@ -100,10 +101,13 @@ const ProductCard = ({ product }: { product: Product }) => {
     return (
         <div className="bg-white rounded-[2.5rem] p-3 shadow-sm hover:shadow-2xl hover:shadow-emerald-900/5 transition-all duration-500 border border-emerald-50/50 group flex flex-col h-full relative overflow-hidden">
             <Link href={`/product/${product._id}`} className="block relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-gray-50">
-                <img
+                <Image
                     src={product.imageUrl}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    fill
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
                 />
 
                 {/* Overlay Badges */}

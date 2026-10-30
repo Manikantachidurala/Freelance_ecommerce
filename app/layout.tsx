@@ -2,9 +2,18 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import dynamic from "next/dynamic";
 import { Toaster } from "sonner";
+
+const Navbar = dynamic(() => import("@/components/Navbar"), {
+  loading: () => <div className="h-20 bg-white border-b border-gray-100" />,
+  ssr: true
+});
+
+const Footer = dynamic(() => import("@/components/Footer"), {
+  loading: () => <div className="h-96 bg-gray-50" />,
+  ssr: true
+});
 
 const outfit = Outfit({ subsets: ["latin"] });
 
